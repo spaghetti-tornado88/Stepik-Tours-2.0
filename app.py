@@ -9,11 +9,16 @@ def main_page():
     '''
     Роут для вывода основной страницы со всеми турами
 
+    tours_to_show - список, хроанящий в себе "id" первых 6 туров, с наибольшим значением "stars"
+
     :return: готовый шаблон с переданными аргументами
 
     '''
+
+    tours_to_show = (sorted(tours, reverse=True, key=lambda k: tours[k]['stars']))[:6]
+
     return render_template('index.html', subtitle=subtitle,
-                           description=description, tours=tours)
+                           description=description, tours=tours, tours_id=tours_to_show)
 
 
 @app.route('/from/<city>')
