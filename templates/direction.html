@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block container %}
 
-<h1 class="display-5 mt-4">Летим <span data-test="from">{{ departure }}</span></h1>
-<p class="mb-4" >Туров найдено: <span data-test="tourcount">{{ tours|length }}</span>; от <span data-test="pricemin">{{ tours.values()|map(attribute='price')|min }} ₽</span> до <span data-test="pricemax">{{ prices|max }} ₽</span> и от <span data-test="nightsmax">{{ nights|min }}</span> ночей до <span data-test="nightsmax">{{ nights|max }}</span> ночей</p>
+{% if tours %}
+<h1 class="display-5 mt-4">Летим <span data-test="from">{{ departures.get(city) }}</span></h1>
+<p class="mb-4" >Туров найдено: <span data-test="tourcount">{{ tours|length }}</span>; от <span data-test="pricemin">{{ prices|min }} ₽</span> до <span data-test="pricemax">{{ prices|max }} ₽</span> и от <span data-test="nightsmin">{{ nights|min }}</span> ночей до <span data-test="nightsmax">{{ nights|max }}</span> ночей</p>
 <div class="row mt-5" data-test="cards">
 
-    {% for tour_id, tour in tours.items() %}
+    {% for tour_id, tour in tours %}
 
     <div class="col-4" data-test="card">
         <div class="card mb-3" >
@@ -22,5 +23,12 @@
     {% endfor %}
 
 </div>
+
+{% else %}
+
+<h1 class="display-5 mt-4">Кажется, <span data-test="from">{{ departures.get(city) }} не улететь 😢</span></h1>
+<h3>Сожалеем об этом.</h3>
+
+{% endif %}
 
 {% endblock %}

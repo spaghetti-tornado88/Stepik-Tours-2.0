@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from data import *
 
 app = Flask(__name__)
-
+tours_list = list(tours.items())
 
 @app.route('/')
 def main_page():
@@ -16,9 +16,12 @@ def main_page():
     '''
 
     tours_to_show = (sorted(tours, reverse=True, key=lambda k: tours[k]['stars']))[:6]
+    # tours_list = list(tours.items())
+    # print(sorted(tours_list, reverse=True, key=lambda x: x[1].get('price'))) Можно еще так - собирается сразу с id и телом тура
+    # постарался использовать оба варианта в коде
 
-    return render_template('index.html', subtitle=subtitle,
-                           description=description, tours=tours, tours_id=tours_to_show)
+    return render_template('index.html', subtitle=subtitle,description=description,
+                           tours=tours, tours_id=tours_to_show, departures=departures)
 
 
 @app.route('/from/<city>')
@@ -41,9 +44,11 @@ def direction_page(city):
             tours_by_city[tour_id] = tour
             prices.append(tour.get('price'))
             nights.append(tour.get('nights'))
-    return render_template('direction.html', tours=tours_by_city,
+
+    return render_template('direction.html', tours=sorted(list(tours_by_city.items()),
+                           reverse=True, key=lambda x: x[1].get('stars')),
                            prices=prices, nights=nights,
-                           departure=departures.get(city))
+                           departures=departures, city=city)
 
 
 @app.route('/tours/<int:tour_id>')
