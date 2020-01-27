@@ -18,8 +18,8 @@
             <ul class="navbar-nav" data-test="navigation">
 
                 {% for dep, dep_title in departures.items() %}
-                {% set path = "/from/" + dep %}
-                <li class="nav-item {% if request.path == path %}active{% endif %}">
+
+                <li class="nav-item {% if request.path == '/from' + dep %}active{% endif %}">
                     <a class="nav-link" href="/from/{{ dep }}" data-test="navlink">{{ dep_title }} </a>
                 </li>
 
