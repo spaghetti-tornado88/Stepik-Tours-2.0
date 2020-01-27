@@ -19,7 +19,7 @@
 
                 {% for dep, dep_title in departures.items() %}
 
-                <li class="nav-item {% if request.path == '/from' + dep %}active{% endif %}">
+                <li class="nav-item {% if request.path == '/from/' + dep %}active{% endif %}">
                     <a class="nav-link" href="/from/{{ dep }}" data-test="navlink">{{ dep_title }} </a>
                 </li>
 
